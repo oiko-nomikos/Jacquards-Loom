@@ -350,6 +350,8 @@ Program
 │              ││    │    ├── FUNCTION: FillOrderLogic: getTotalFeesPaid -->
 │              ││    │    ├── FUNCTION: FillOrderLogic: getTotalVolume -->
 │              ││    │    ├── FUNCTION: FillOrderLogic: getRollingVolume -->
+│              ││    │    ├── FUNCTION: FillOrderLogic: calculateAverageBuyPrice -->
+│              ││    │    ├── FUNCTION: FillOrderLogic: calculateAverageSellPrice -->
 │              ││    │    ├── FUNCTION: TradeLogic: getTotalClosedOrders -->
 │              ││    │    ├── FUNCTION: TradeLogic: getClosedLong -->
 │              ││    │    ├── FUNCTION: TradeLogic: getClosedShort -->
@@ -359,19 +361,17 @@ Program
 │              ││    │    ├── FUNCTION: TradeLogic: getProfitPerOrderUSD -->
 │              ││    │    ├── FUNCTION: TradeLogic: getTotalRealizedProfitBTC -->
 │              ││    │    ├── FUNCTION: TradeLogic: getTotalRealizedProfitUSD -->
-│              ││    │    ├── FUNCTION: FillOrderLogic: calculateAverageBuyPrice -->
-│              ││    │    ├── FUNCTION: FillOrderLogic: calculateAverageSellPrice -->
+│              ││    │    ├── FUNCTION: tradeLogic: calculateUnrealizedProfitBTC -->
+│              ││    │    ├── FUNCTION: tradeLogic: calculateLiquidationPrice -->
+│              ││    │    ├── FUNCTION: tradeLogic: calculateLiquidationPrice -->
 │              ││    │    ├── FUNCTION: PlaceNewOrders: rebalanceStats: globalAverage -->
 │              ││    │    ├── FUNCTION: PlaceNewOrders: rebalanceStats: startPrice -->
-│              ││    │    ├── FUNCTION: PlaceNewOrders: rebalanceStats: endPrice -->│              ││    │    ├── FUNCTION: FillOrderLogic: calculateAverageSellPrice -->
+│              ││    │    ├── FUNCTION: PlaceNewOrders: rebalanceStats: endPrice -->│
 │              ││    │    ├── FUNCTION: PlaceNewOrders: rebalanceStats: percentReturned -->
 │              ││    │    ├── FUNCTION: PlaceNewOrders: rebalanceStats: gain -->
 │              ││    │    ├── FUNCTION: PlaceNewOrders: rebalanceStats: endPrice -->
 │              ││    │    ├── FUNCTION: PlaceNewOrders: rebalanceStats: targetUSDfraction -->
 │              ││    │    ├── FUNCTION: PlaceNewOrders: rebalanceStats: targetBTCfraction -->
-│              ││    │    ├── FUNCTION: tradeLogic: calculateUnrealizedProfitBTC -->│              ││    │    ├── FUNCTION: FillOrderLogic: calculateAverageSellPrice -->
-│              ││    │    ├── FUNCTION: tradeLogic: calculateLiquidationPrice -->
-│              ││    │    ├── FUNCTION: tradeLogic: calculateLiquidationPrice -->
 │              ││    │    ├── FUNCTION: Parameters: makerFeeRate -->
 │              ││    │    ├── FUNCTION: Parameters: takerFeeRate -->
 │              ││    │    ├── FUNCTION: Banking: getBalance -->
