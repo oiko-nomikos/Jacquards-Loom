@@ -1699,44 +1699,6 @@ class WordEncoder {
 //----------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
 
-class EratosthenesMethod {
-  public:
-    // NOTE: Will not work for large 'end' due to memory/time limits.
-    std::vector<uint64_t> sievePrimes(uint64_t start, uint64_t end) {
-        if (start < 2)
-            start = 2;
-        if (end < start)
-            return {};
-
-        // Check range is not too large (simple safety)
-        if (end - start > 100'000) {
-            std::cerr << "Range too large for sieve. Aborting.\n";
-            return {};
-        }
-
-        std::vector<bool> is_prime(end + 1, true);
-        is_prime[0] = is_prime[1] = false;
-
-        for (uint64_t p = 2; p * p <= end; ++p) {
-            if (is_prime[p]) {
-                for (uint64_t multiple = p * p; multiple <= end; multiple += p)
-                    is_prime[multiple] = false;
-            }
-        }
-
-        std::vector<uint64_t> primes;
-        for (uint64_t i = start; i <= end; ++i) {
-            if (is_prime[i])
-                primes.push_back(i);
-        }
-        return primes;
-    }
-};
-
-//----------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------
-
 namespace CRYPTO {
 class SHA256 {
   public:
