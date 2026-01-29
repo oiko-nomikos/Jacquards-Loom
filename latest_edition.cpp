@@ -978,7 +978,7 @@ class Render {
     std::string printColumns(const std::vector<std::vector<Line>> &columns, int colWidth = 0, int spacing = 0, int padding = 0) const {
         std::ostringstream oss;
 
-        int consoleWidth = functions.getConsoleWidth();
+        int consoleWidth = getConsoleWidth();
         int numCols = columns.size();
 
         int totalWidth = numCols * colWidth + (numCols - 1) * spacing + padding * 2;
@@ -1089,6 +1089,12 @@ class Render {
         }
         }
         return txt; // fallback
+    }
+
+    int getConsoleWidth() const {
+        CONSOLE_SCREEN_BUFFER_INFO csbi;
+        GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+        return csbi.srWindow.Right - csbi.srWindow.Left + 1;
     }
 };
 
@@ -1468,17 +1474,18 @@ class Functions {
         bodyCol1.clear();
         bodyCol2.clear();
         bodyCol3.clear();
-        functions.clearConsole();
+        clearConsole();
     }
 
     void clearColumns() {
         col1.clear();
         col2.clear();
         col3.clear();
-        functions.clearConsole();
+        clearConsole();
     }
 
     void print() {
+        Render render;
         std::vector<std::vector<Line>> columns = {col1, col2, col3};
         std::cout << render.printColumns(columns, 80, 4);
     }
@@ -4479,7 +4486,7 @@ class Interface_Wallet {
             switch (choice) {
 
             case 1: { // Create new address
-                clearColumns();
+                functions.clearColumns();
                 header();
                 createNewAddress();
 
@@ -4490,7 +4497,7 @@ class Interface_Wallet {
             }
 
             case 2: { // List addresses
-                clearColumns();
+                functions.clearColumns();
                 listAddresses();
 
                 std::vector<std::vector<Line>> columns = {col1, col2, col3};
@@ -4501,11 +4508,11 @@ class Interface_Wallet {
             }
 
             case 3: { // Send
-                clearColumns();
+                functions.clearColumns();
 
                 int txType = 0;
                 while (txType != 1 && txType != 2) {
-                    clearColumns();
+                    functions.clearColumns();
 
                     col2.push_back({"Select transaction type:", Align::CENTER});
                     col2.push_back({"1. Single-Signature Transaction", Align::CENTER});
@@ -4522,7 +4529,7 @@ class Interface_Wallet {
                     }
                 }
 
-                clearColumns();
+                functions.clearColumns();
 
                 if (txType == 1)
                     ui_transactions.SinglePayment();
@@ -4537,7 +4544,7 @@ class Interface_Wallet {
             }
 
             case 4: { // Receive
-                clearColumns();
+                functions.clearColumns();
                 receive();
 
                 col2.push_back({"Receiving address created.", Align::CENTER});
@@ -4553,7 +4560,7 @@ class Interface_Wallet {
                 break;
 
             default: {
-                clearColumns();
+                functions.clearColumns();
                 col2.push_back({"Invalid option. Try again.", Align::CENTER});
 
                 std::vector<std::vector<Line>> columns = {col1, col2, col3};
@@ -4720,7 +4727,7 @@ class Interface_Blockchain {
         LOG_INFO("Class: Interface_Blockchain... Running run logic");
         int choice = -1;
         while (choice != 0) {
-            clearColumns();
+            functions.clearColumns();
 
             // Static menu
             header();
@@ -4735,37 +4742,37 @@ class Interface_Blockchain {
             switch (choice) {
             case 1:
                 LOG_INFO("Class: running run logic... Selected startBlockchain");
-                clearColumns();
+                functions.clearColumns();
                 startBlockchain();
                 break;
             case 2:
                 LOG_INFO("Class: running run logic... Selected stopBlockchain");
-                clearColumns();
+                functions.clearColumns();
                 stopBlockchain();
                 break;
             case 3:
                 LOG_INFO("Class: running run logic... Selected enableOutput");
-                clearColumns();
+                functions.clearColumns();
                 enableOutput();
                 break;
             case 4:
                 LOG_INFO("Class: running run logic... Selected disableOutput");
-                clearColumns();
+                functions.clearColumns();
                 disableOutput();
                 break;
             case 5:
                 LOG_INFO("Class: running run logic... Selected viewWallet");
-                clearColumns();
+                functions.clearColumns();
                 ui_wallet.viewWallet(wallet, mining);
                 break;
             case 0:
                 LOG_INFO("Class: running run logic... Selected nExiting");
-                clearColumns();
+                functions.clearColumns();
                 std::cout << "\nExiting Blockchain Interface...\n";
                 return;
             default:
                 LOG_INFO("Class: running run logic... Selected Invalid choice");
-                clearColumns();
+                functions.clearColumns();
                 std::cout << "Invalid choice.\n";
             }
         }
@@ -11193,7 +11200,7 @@ class Trader {
 
         while (trading) {
             LOG_INFO("Class: Trader... Running Trading logic, iteration: " + iterationCount);
-            clearBodyColumns();
+            functions.clearBodyColumns();
             functions.clearConsole();
 
             // Fetch latest (current incomplete candle)
@@ -11424,7 +11431,7 @@ class Interface_Trade_Settings {
         int choice = -1;
 
         while (choice != 0) {
-            clearColumns();
+            functions.clearColumns();
             header();
             terminalTradeSettings();
 
@@ -11435,47 +11442,47 @@ class Interface_Trade_Settings {
 
             switch (choice) {
             case 1:
-                clearColumns();
+                functions.clearColumns();
                 header();
                 selectThreshold();
                 break;
             case 2:
-                clearColumns();
+                functions.clearColumns();
                 header();
                 setStopLossPercent();
                 break;
             case 3:
-                clearColumns();
+                functions.clearColumns();
                 header();
                 selectTradeType();
                 break;
             case 4:
-                clearColumns();
+                functions.clearColumns();
                 header();
                 selectIncrement();
                 break;
             case 5:
-                clearColumns();
+                functions.clearColumns();
                 header();
                 setDelayHours();
                 break;
             case 6:
-                clearColumns();
+                functions.clearColumns();
                 header();
                 setSpotOrders();
                 break;
             case 7:
-                clearColumns();
+                functions.clearColumns();
                 header();
                 setOrderAmount();
                 break;
             case 8:
-                clearColumns();
+                functions.clearColumns();
                 header();
                 selectLeverage();
                 break;
             case 9:
-                clearColumns();
+                functions.clearColumns();
                 header();
                 toggleTweetOutput();
                 break;
@@ -12043,28 +12050,28 @@ class Interface_Trade {
             switch (choice) {
             case 1:
                 LOG_INFO("Class: Interface_Trade... Menu: selected Start Trading");
-                clearColumns();
+                functions.clearColumns();
                 startTrading();
                 break;
             case 2:
                 LOG_INFO("Class: Interface_Trade... Menu: selected Stop Trading");
-                clearColumns();
+                functions.clearColumns();
                 stopTrading();
                 break;
             case 3:
                 LOG_INFO("Class: Interface_Trade... Menu: selected Enable Output");
-                clearColumns();
+                functions.clearColumns();
                 enableOutput();
                 break;
             case 4:
                 LOG_INFO("Class: Interface_Trade... Menu: selected Disable Output");
-                clearColumns();
+                functions.clearColumns();
                 disableOutput();
                 break;
             case 5: {
                 LOG_INFO("Class: Interface_Trade... Menu: selected ui_trade_settings");
-                clearColumns();
-                clearBodyColumns();
+                functions.clearColumns();
+                functions.clearBodyColumns();
                 disableOutput();
                 Interface_Trade_Settings ui_trade_settings(trader, params);
                 ui_trade_settings.trade_settings();
@@ -12324,7 +12331,7 @@ class Interface_Exchange {
         LOG_INFO("Class: Interface_Exchange... Running exchange logic");
         int choice = -1;
         while (choice != 0) {
-            clearColumns();
+            functions.clearColumns();
             functions.clearConsole();
             header();
             col2.push_back({"Select Exchange", Align::LEFT});
@@ -12443,7 +12450,7 @@ class Interface_Exchange {
 
             // Try again after creation
             if (!kraken.loadCredentials(apiKey, apiSecret)) {
-                clearColumns();
+                functions.clearColumns();
                 functions.clearConsole();
                 header();
                 col2.push_back({"Failed to load Kraken credentials after creation.", Align::LEFT});
